@@ -11,6 +11,7 @@ function passwordsMatch(req, res, next) {
 }
 
 function doesUserExist(req, res, next) {
+  console.log(req.body.email)
     const user = getUserByEmailModel(req.body.email)
     console.log(user)
     if (user) {
