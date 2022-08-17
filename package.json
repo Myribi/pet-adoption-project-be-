@@ -20,6 +20,7 @@
   "homepage": "https://github.com/israeltechchallenge/fs-pet-adoption-be-Myribi#readme",
   "dependencies": {
     "ajv": "^8.11.0",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
