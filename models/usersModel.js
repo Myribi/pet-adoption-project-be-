@@ -1,5 +1,4 @@
 
-
 const path =require('path');
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
@@ -10,13 +9,23 @@ const usersSchema = new Schema({
   name: { type: String, required: true },
   phone: { type: String, required: true},
   email: { type: String, required: true},
-  password: { type: String, required: true },
+  password: { type: String, required: true, minLength: 6},
 })
 
+const userModel = mongoose.model('user',usersSchema)
 
+async function getUserByEmailModel(email){
+  try {
+      const user = await userModel.find({email: email}).exec()
+      return user
+  } catch (err) {
+      console.log(err)
+  }
+}
 
-module.exports = mongoose.model('users',usersSchema)
-
+module.exports={getUserByEmailModel, userModel}
+// module.exports = mongoose.model('user',usersSchema)
+  
 
 
 

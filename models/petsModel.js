@@ -1,27 +1,20 @@
-const fs = require('fs');
-const path =require('path');
-const pathToDb = path.resolve(__dirname, '../database/petsDb.json');
 
+const path = require("path");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-function getPetsModel() {
-    try {
-        const allPets = fs.readFileSync(pathToDb)
-        return JSON.parse(allPets)
-    }catch(err) {
-        console.log(err)
-    }
-}
+const petSchema = new Schema({
+  type: { type: String, required: true },
+  name: { type: String, required: true },
+  adoptionStatus: { type: String, required: true },
+  picture: { type: String, required: true },
+  height: { type: Number, required: true },
+  weight: { type: Number, required: true },
+  color: { type: String, required: true },
+  bio: { type: String, required: true },
+  hypoallergnic: { type: String, required: true },
+  dietery: { type: String, required: true },
+  breed: { type: String, required: true },
+});
 
-
-function getPetByTypeModel(type) {
-    try {
-        const allPets = getPetsModel();
-        const pet = allPets.find((pet) => pet.type === type);
-        console.log(pet)
-        return pet
-      } catch (err) {
-        console.log(err);
-      }
-}
-
-module.exports = {getPetsModel, getPetByTypeModel}
+module.exports = mongoose.model('pet',petSchema)

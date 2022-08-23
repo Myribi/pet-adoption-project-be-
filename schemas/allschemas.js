@@ -13,6 +13,17 @@ const userSchema = {
   additionalProperties: false,
 };
 
+
+
+const loginSchema = {
+  type: "object",
+  properties: {
+   logEmail: {type: "string"},
+   logPassword: {type: "string"},
+  },
+  additionalProperties: false
+}
+
 const petsSchema = {
   type: "object",
   properties: {
@@ -23,18 +34,17 @@ const petsSchema = {
     height: { type: "string" },
     weight: { type: "string" },
     color: { type: "string" },
-    bio: { type: "text" },
+    bio: { type: "string" },
     hypoallergnic: { type: "boolean" },
     dietery: { type: "array" },
     breed: { type: "string" },
   },
-  required: [""],
+
   additionalProperties: false,
 };
 
-// module.exports = mongoose.model('user',usersSchema) ;
 
-module.exports = {userSchema,petsSchema}
+module.exports = {userSchema, petsSchema, loginSchema}
 
 
 
