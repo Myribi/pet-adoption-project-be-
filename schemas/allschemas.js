@@ -30,21 +30,32 @@ const petsSchema = {
     type: { type: "string" },
     name: { type: "string" },
     adoptionStatus: { type: "string" },
-    picture: { type: "string" },
-    height: { type: "string" },
-    weight: { type: "string" },
+   
+    height: { type: "number" },
+    weight: { type: "number" },
     color: { type: "string" },
     bio: { type: "string" },
-    hypoallergnic: { type: "boolean" },
-    dietery: { type: "array" },
+    hypoallergnic: { type: "string" },
+    dietery: { type: "string" },
     breed: { type: "string" },
   },
-
-  additionalProperties: false,
 };
 
+const profileSchema = {
+  type: "object",
+  properties: {
+    name: {type: "string"},
+    phone: {type: "string"},
+    email: {type: "string"},
+    password: {type: "string"},
+    bio: {type: "string"},
+  },
+  additionalProperties: false
+}
 
-module.exports = {userSchema, petsSchema, loginSchema}
+module.exports = {profileSchema}
+
+module.exports = {userSchema, petsSchema, loginSchema, profileSchema}
 
 
 

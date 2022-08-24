@@ -1,7 +1,7 @@
-const { v4: uuidv4 } = require("uuid");
+
 const { userModel } = require("../models/usersModel");
 const User = require("../models/usersModel");
-const { doesUserExist } = require("../middleware/usersMiddleware");
+
 const jwt = require('jsonwebtoken')
 
 async function signup(req, res) {
@@ -25,33 +25,20 @@ async function signup(req, res) {
   }
 }
 
-// async function login(req, res, next) {
-//   const { email, password } = req.body;
-//   let identifiedUser;
-//   try {
-//     identifiedUser = await User.findOne({ email: email });
-//   } catch (err) {
-//     res.status(400).send("Email or password is wrong");
-//     next();
-//   }
-//   if (!identifiedUser || identifiedUser.password !== password) {
-//     res.status(400).send("Email or password is wrong");
-//     return next();
-//   }
-//   res.json({ message: "logged in!" });
-// }
 
 function login(req, res){
 
   try {
       const {user} = req.body;
-      const token = jwt.sign({id: user.userId}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN});
+      console.log(user)
+      const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN});
+   
       res.send({
           token: token, 
-          user:user[0].name,
-          email:user[0].email,
-          phone:user[0].phone,
-      
+          userId: user._id,
+          user:user.name,
+          email:user.email,
+          phone:user.phone,
       });
   } catch (error) {
       console.log(error)
@@ -59,4 +46,30 @@ function login(req, res){
 
 }
 
-module.exports = { signup, login };  
+async function getUserById(req, res){
+  try {
+    const userById = await userModel.findById(req.params.id);
+    res.send(userById);
+  } catch (err) {
+    res.status(500).send("fetching user failed, try again later");
+  }
+}
+
+async function editUserData(req, res){
+  
+  try {
+      const newInfo = await userModel.findOneAndUpdate({ id: req.body.id },{email:req.body.email, }, (err)=>{
+        
+          if(err){
+              console.log(err)
+          }
+          console.log("editado :)")
+      })
+
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+
+module.exports = { signup, login, getUserById, editUserData};  

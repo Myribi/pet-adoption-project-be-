@@ -2,8 +2,7 @@
 const path =require('path');
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const User = require("../models/usersModel");
-const bcrypt = require('bcrypt')
+// const User = require("../models/usersModel");
 
 const usersSchema = new Schema({
   name: { type: String, required: true },

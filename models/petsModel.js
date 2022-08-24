@@ -7,7 +7,7 @@ const petSchema = new Schema({
   type: { type: String, required: true },
   name: { type: String, required: true },
   adoptionStatus: { type: String, required: true },
-  picture: { type: String, required: true },
+  picture:{ type: String, required: true},
   height: { type: Number, required: true },
   weight: { type: Number, required: true },
   color: { type: String, required: true },
@@ -17,4 +17,5 @@ const petSchema = new Schema({
   breed: { type: String, required: true },
 });
 
-module.exports = mongoose.model('pet',petSchema)
+const petModel = mongoose.model('pet',petSchema)
+module.exports = {petModel}

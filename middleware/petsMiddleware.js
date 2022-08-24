@@ -26,4 +26,6 @@ const isQueryValid = (req,res, next) => {
     next();
   };
 
+  
+
 module.exports = {isQueryValid}

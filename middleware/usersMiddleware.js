@@ -1,6 +1,6 @@
 const {getUserByEmailModel, userModel} = require('../models/usersModel')
-// const User = require("../models/usersModel");
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken");
 
 function passwordsMatch(req, res, next) {
   if (req.body.password === req.body.repassword) {
@@ -77,4 +77,25 @@ async function verifyPassword(req, res, next) {
   });
 }
 
-module.exports = { passwordsMatch , doesUserExist, hashedPassword, getUsers, isExistingUser, verifyPassword};
+async function auth(req, res, next) {
+  if (!req.headers.authorization) {
+    res.status(401).send("Authorization headers required");
+    return;
+  }
+  const token = req.headers.authorization.replace("Bearer ", "");
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      res.status(401).send("Unauthorized");
+      return;
+    }
+    if (decoded) {
+      req.body.id = decoded.userId
+      next();
+      return;
+    }
+  });
+}
+
+
+
+module.exports = { passwordsMatch , doesUserExist, hashedPassword, getUsers, isExistingUser, verifyPassword, auth};
