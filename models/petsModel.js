@@ -17,5 +17,14 @@ const petSchema = new Schema({
   breed: { type: String, required: true },
 });
 
+async function getPetByIdModel(id){
+  try {
+      const PetId = await petModel.findOne({_id: id})
+      return PetId
+  } catch (err) {
+      console.log(err)
+  }
+}
+
 const petModel = mongoose.model('pet',petSchema)
-module.exports = {petModel}
+module.exports = {petModel, getPetByIdModel}

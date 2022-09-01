@@ -1,16 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const {getPets, getPetById, addPet} = require('../controllers/petsController');
-const { isQueryValid } = require('../middleware/petsMiddleware');
+const {getPets, getPetById, addPet,fosterOrAdopt, getFosteredAdoptedPets, getFosAdPets} = require('../controllers/petsController');
+const { isQueryValid, getPetInfo} = require('../middleware/petsMiddleware');
 const { validateBody } = require('../middleware/validateBody');
-const { petsSchema } = require('../schemas/allschemas');
-const {upload, picUrl, uploadToCloudinary} = require('../middleware/imagesMiddleware')
+const { petsSchema} = require('../schemas/allschemas');
+const {upload, uploadToCloudinary} = require('../middleware/imagesMiddleware');
+const { auth, isAdmin, getUserInfo } = require('../middleware/usersMiddleware');
+const { getFavPets } = require('../controllers/usersController');
 
-router.get('/', validateBody(petsSchema),isQueryValid,getPets)
-router.get('/:id', getPetById)
 
-// router.post('/addpet', addPet)
-router.post('/addpet',validateBody(petsSchema), upload.single('picture'),uploadToCloudinary, picUrl, addPet)
+router.get('/getadoptedfosteredpets', auth, getUserInfo, getFosteredAdoptedPets)
+
+
+router.post('/:id/adoptfoster',auth,getPetInfo,fosterOrAdopt)
+
+
+router.post('/addpet', validateBody(petsSchema),auth, getUserInfo, isAdmin, upload.single('picture'),uploadToCloudinary, addPet)
+router.get('/:id',getPetById)
+router.get('/', validateBody(petsSchema), isQueryValid,getPets)
 
   
 module.exports = router

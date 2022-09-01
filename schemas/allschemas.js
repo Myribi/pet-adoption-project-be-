@@ -1,5 +1,3 @@
-
-
 const userSchema = {
   type: "object",
   properties: {
@@ -8,21 +6,20 @@ const userSchema = {
     email: { type: "string" },
     password: { type: "string" },
     repassword: { type: "string" },
+    bio: { type: "string" },
   },
   required: ["name", "phone", "email"],
   additionalProperties: false,
 };
 
-
-
 const loginSchema = {
   type: "object",
   properties: {
-   logEmail: {type: "string"},
-   logPassword: {type: "string"},
+    logEmail: { type: "string" },
+    logPassword: { type: "string" },
   },
-  additionalProperties: false
-}
+  additionalProperties: false,
+};
 
 const petsSchema = {
   type: "object",
@@ -30,7 +27,6 @@ const petsSchema = {
     type: { type: "string" },
     name: { type: "string" },
     adoptionStatus: { type: "string" },
-   
     height: { type: "number" },
     weight: { type: "number" },
     color: { type: "string" },
@@ -41,21 +37,58 @@ const petsSchema = {
   },
 };
 
+const pwdSchema = {
+  type: "object",
+  properties: {
+    prevPwd: { type: "string" },
+    updatedPwd: { type: "string" },
+    verifiedUpdatedPwd: { type: "string" },
+  },
+  additionalProperties: false,
+};
+
 const profileSchema = {
   type: "object",
   properties: {
-    name: {type: "string"},
-    phone: {type: "string"},
-    email: {type: "string"},
-    password: {type: "string"},
-    bio: {type: "string"},
+    name: { type: "string" },
+    phone: { type: "string" },
+    email: { type: "string" },
+    bio: { type: "string" },
   },
-  additionalProperties: false
-}
+  additionalProperties: false,
+};
 
-module.exports = {profileSchema}
+const favSchema = {
+  type: "object",
+  properties: {
+    petId: { type: "string" },
+  },
+  additionalProperties: false,
+};
 
-module.exports = {userSchema, petsSchema, loginSchema, profileSchema}
+
+const petStatusSchema = {
+  type: "object",
+  properties: {
+    petId: { type: "string" },
+    adoptionStatus: {
+      type: "string" ,
+      enum: ["Available", "Fostered", "Adopted"],
+   }
+
+  },
+  additionalProperties: false,
+};
 
 
 
+
+module.exports = {
+  userSchema,
+  petsSchema,
+  loginSchema,
+  profileSchema,
+  pwdSchema,
+  favSchema,
+  petStatusSchema
+};
