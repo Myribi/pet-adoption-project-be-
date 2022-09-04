@@ -120,7 +120,7 @@ async function verifyPassword(req, res, next) {
 }
 
 async function auth(req, res, next) {
-  
+
   if (!req.headers.authorization) {
     res.status(401).send("Authorization headers required");
     return;
@@ -129,6 +129,7 @@ async function auth(req, res, next) {
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       res.status(401).send("Unauthorized");
+
       return;
     }
     if (decoded) {

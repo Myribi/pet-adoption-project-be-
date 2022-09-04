@@ -55,7 +55,7 @@ async function addPet(req, res) {
     type,
     name,
     adoptionStatus,
-    picUrl,
+    picture,
     height,
     weight,
     color,
@@ -69,7 +69,7 @@ async function addPet(req, res) {
       type: type,
       name: name,
       adoptionStatus: adoptionStatus,
-      picture: picUrl,
+      picture: picture,
       height: height,
       weight: weight,
       color: color,
@@ -157,31 +157,24 @@ async function getFosteredAdoptedPets(req, res) {
   }
 }
 
-// async function getFosAdPets(req, res) {
-  
-//   try {
+async function editPetData(req, res) {
+console.log(req.body)
+  try {
+    const newPetInfo = await petModel.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      {
+        new: true,
+      }
+    );
+   
+    console.log(newPetInfo)
+    await res.send(newPetInfo);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-//     const adopted = await Promise.all(
-//       req.body.user.adoptedPets.map(async (id) => {
-//         const ado = await petModel.findOne({ _id: id });
-
-//         return ado;
-//       })
-//     );
-
-//     const fostered = await Promise.all(
-//       req.body.user.fosteredPets.map(async (id) => {
-//         const fos = await petModel.findOne({ _id: id });
-
-//         return fos;
-//       })
-//     );
-
-//     res.send(fostered,adopted);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 module.exports = {
   getPets,
@@ -189,5 +182,5 @@ module.exports = {
   addPet,
   fosterOrAdopt,
   getFosteredAdoptedPets,
-
+  editPetData
 };

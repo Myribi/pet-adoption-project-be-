@@ -27,6 +27,25 @@ const petsSchema = {
     type: { type: "string" },
     name: { type: "string" },
     adoptionStatus: { type: "string" },
+    picture:{ type: "string"},
+    height: { type: "number" },
+    weight: { type: "number" },
+    color: { type: "string" },
+    bio: { type: "string" },
+    hypoallergnic: { type: "string" },
+    dietery: { type: "string" },
+    breed: { type: "string" },
+  },
+};
+
+const editPetSchema = {
+  
+  type: "object",
+  properties: {
+    type: { type: "string" },
+    name: { type: "string" },
+    adoptionStatus: { type: "string" },
+    picture:{ type: "string"},
     height: { type: "number" },
     weight: { type: "number" },
     color: { type: "string" },
@@ -90,5 +109,6 @@ module.exports = {
   profileSchema,
   pwdSchema,
   favSchema,
-  petStatusSchema
+  petStatusSchema,
+  editPetSchema
 };

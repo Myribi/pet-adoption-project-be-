@@ -1,6 +1,7 @@
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
+const { petModel } = require("../models/petsModel");
 
 const upload = multer({ dest: "./images" });
 
@@ -22,11 +23,34 @@ function uploadToCloudinary(req, res, next) {
       return;
     }
     if (result) {
-      req.body.picUrl = result.secure_url;
+      req.body.picture = result.secure_url;
+      console.log(req.body.picUrl)
       fs.unlinkSync(req.file.path);
       next();
     }
   });
 }
 
-module.exports = { upload, uploadToCloudinary };
+function updatePhotoToCloudinary(req, res, next) {
+ 
+  if (req.file) {
+  cloudinary.uploader.upload(req.file.path, (err, result) => {
+    if (err) {
+      res.status(500).send(err.message);
+      return;
+    }
+    if (result) {
+      req.body.picture = result.secure_url;
+      console.log(req.body.picUrl)
+      fs.unlinkSync(req.file.path);
+      next();
+    }
+  
+  });
+} else {
+  next()
+}
+
+}
+
+module.exports = { upload, uploadToCloudinary,updatePhotoToCloudinary};

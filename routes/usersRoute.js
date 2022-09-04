@@ -11,6 +11,8 @@ const { getfosteredOrAdoptedPets, getFosteredPets, getAdoptedPets, getFosteredAd
 router.post('/signup', validateBody(userSchema), doesUserExist, passwordsMatch, hashedPassword, signup)
 router.post('/login', validateBody(loginSchema), isExistingUser, verifyPassword, login)
 
+router.get('/users/:id', )
+
 router.post('/favpets', validateBody(favSchema), auth, getUserInfo, addFavPet)
 router.get('/getfavpets', auth, getUserInfo, getFavPets)
 router.post('/removefavpets', auth, getUserInfo, removeFavPets)
